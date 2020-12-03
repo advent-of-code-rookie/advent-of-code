@@ -1,7 +1,7 @@
 // Load fs module
 const fs = require("fs");
 
-// Returns content of input.txt
+// Return content of input.txt
 let input = fs.readFileSync("./input.txt", "utf-8");
 
 // Get array of integers

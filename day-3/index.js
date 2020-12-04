@@ -23,7 +23,7 @@ for (let i = 0; i < map.length; i++) {
     position_x = position_x - map[i].length;
     console.log("we're at line " + line);
 
-// Checks destination character
+// Check destination character
     console.log(map[i].charAt(position_x))
     if (map[i].charAt(position_x)=='#') {
         trees++;

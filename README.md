@@ -13,6 +13,6 @@ Then you can run the code by typing `node index.js` on your terminal
 You need to have node js installed on your system \
 Then you can run the code by typing `node index.js` on your terminal
 
-## How to... day three
+## How to... day four
 You need to have node js installed on your system \
 Then you can run the code by typing `node index.js` on your terminal

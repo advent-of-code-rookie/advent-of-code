@@ -28,10 +28,10 @@ for (let i = 0; i < ints.length; i++) {
 }
 
 // Sum result with two values
-console.log("Summing two values: " + numberA_one + " + " + numberB_one + " = 2020");
+console.log("Adding two values: " + numberA_one + " + " + numberB_one + " = 2020");
 
 // Sum result with three values
-console.log("Summing three values: " + numberA_two + " + " + numberB_two + " + " + numberC_two + " = 2020");
+console.log("Adding three values: " + numberA_two + " + " + numberB_two + " + " + numberC_two + " = 2020");
 
 // Multiplication result with two values
 console.log("hence multiplicating two values: " + numberA_one + " * " + numberB_one + " = " + multiplication_one)

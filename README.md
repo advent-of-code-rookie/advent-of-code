@@ -24,3 +24,7 @@ Then you can run the code by typing `node index.js` on your terminal
 ## How to... day six
 You need to have node js installed on your system \
 Then you can run the code by typing `node index.js` on your terminal
+
+## How to... day seven
+You need to have node js installed on your system \
+Then you can run the code by typing `node index.js` on your terminal

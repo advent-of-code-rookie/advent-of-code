@@ -1,41 +1,76 @@
+// Load fs module
 const fs = require('fs');
 
-const lines = fs.readFileSync('input.txt', {encoding: 'utf-8'}).split('\n').filter(x => x);
 
-console.log(lines);
+// Retrieve content of input
+const lines = fs.readFileSync('input.txt', {encoding: 'utf-8'});
 
-let accumulator = 0;
+class Program {
+    constructor(string, options = {}) {
+        this.accumulator = 0;
 
+// Pointer to check if index has been covered
+        this.pointer = 0;
+        this.done = new Set();
+        this.options = options;
+        this.isFinished = false;
 
-
-for (let i = 0; i < lines.length; i++) {
-    let prueba = lines[i].slice(0, 3);
-    let prueba2 = lines[i].slice(4, 5);
-    let prueba3 = parseInt(lines[i].slice(5, 8));
-    if (prueba == 'acc') {
-        if (prueba2 == '+') {
-            accumulator += prueba3;
-        }
-        else if (prueba2 == '-') {
-                accumulator -= prueba3;
-        }
-        
+// Clean input 
+        this.code = string.split('\n').filter(x => x).map((line) => {
+            const {groups} = /^(?<instruction>\D+) \+?(?<value>-?\d+)$/.exec(line);
+            groups.value = parseInt(groups.value);
+            return groups;
+        });
     }
-    else if (prueba == 'jmp') {
-        if (prueba2 == '+') {
-            var newLine = i + prueba3
-            i = newLine;
-        }
-        else if (prueba2 == '-') {
-           newLine = i - prueba3;
-            i = newLine;
-            let notac = lines.every[prueba3];
-            if (lines[i] === lines[newLine] && accumulator != notac) {
-                console.log(lines[i]);
+
+    run() {
+        while(true) {
+            if(this.pointer == this.code.length) {
+                this.isFinished = true;
                 break;
+            }
+            const {instruction, value} = this.code[this.pointer];
+
+            if(this.done.has(this.pointer)) {
+                if(this.options.infiniteLoopWarning) console.log('Going back to this instruction makes the program loop forever. Accumulator is' , this.accumulator);
+                break;
+            }
+            this.done.add(this.pointer)
+
+            switch (instruction) {
+                case 'nop':
+                    this.pointer++;
+                    break;
+                case 'acc':
+                    this.accumulator += value;
+                    this.pointer++;
+                    break;
+                case 'jmp':
+                    this.pointer += value;
+                    break;
             }
         }
     }
 }
 
-console.log(accumulator);
+
+// Part two
+const p = new Program(lines, {infiniteLoopWarning: true});
+p.run();
+
+const code = p.code;
+for (let i = 0; i < code.length; i++) {
+    const element = code[i];
+    if(element.instruction === 'nop' || element.instruction === 'jmp') {
+        const copy = JSON.parse(JSON.stringify(code));
+        copy[i].instruction = element.instruction === 'nop' ? 'jmp' : 'nop';
+
+        const newSource = copy.map(x => `${x.instruction} ${x.value}`).join('\n');
+        const fixedProgram = new Program(newSource);
+        fixedProgram.run();
+
+        if(fixedProgram.isFinished) {
+            console.log("The value of the accumulator after fixing the program is" , fixedProgram.accumulator);
+        }
+    }
+}

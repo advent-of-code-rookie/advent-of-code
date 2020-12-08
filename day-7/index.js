@@ -1,9 +1,12 @@
+// Load fs module
 const fs = require('fs');
 
+// Return content of input.txt
 const lines = fs.readFileSync('input.txt', {encoding: 'utf-8'}).split('\n').filter(x => x);
 
 const map = new Map();
 
+// Check if bag contains shiny gold
 function containsShinyGold(color) {
     if(color === 'shiny gold')  {
         return true;
@@ -14,6 +17,7 @@ function containsShinyGold(color) {
         }
     }
 
+// Check if bags inside bag contain shiny gold
     const bagsInBag = map.get(color);
     for (const {color: bag} of bagsInBag) {
         if(containsShinyGold(bag)) {
@@ -23,6 +27,8 @@ function containsShinyGold(color) {
     return false;
 }
 
+
+// Clean input
 for (const line of lines) {
     const [bag, bags] = line.split(' bags contain ');
 
